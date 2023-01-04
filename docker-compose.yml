@@ -1,0 +1,230 @@
+version: "3.3"
+services:
+  ipfs:
+    container_name: ipfs-service
+    build:
+      context: ./ipfs
+      dockerfile: Dockerfile
+    networks:
+      - graph
+  postgres:
+    container_name: db
+    image: postgres
+    networks:
+      - graph
+    command:
+      [
+        "postgres",
+        "-cmax_connections=1000",
+        "-cshared_preload_libraries=pg_stat_statements",
+      ]
+    volumes:
+      - ./pg-init-scripts:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_MULTIPLE_DATABASES=bitgert_graph_node,astar_graph_node,polygon_graph_node,telos_graph_node,smartchain_graph_node,okc_graph_node,wanchain_graph_node,gatechain_graph_node,ethereum_graph_node,omax_graph_node
+  bitgert:
+    container_name: bitgert_graph_node
+    image: graphprotocol/graph-node
+    depends_on:
+      - ipfs
+      - postgres
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      postgres_host: postgres
+      postgres_user: postgres
+      postgres_pass: postgres
+      postgres_db: bitgert_graph_node
+      ipfs: ipfs:5001
+      ethereum: "mainnet:https://nodes.vefinetwork.org/bitgert"
+      GRAPH_LOG: info
+    networks:
+      - graph
+  astar:
+    container_name: astar_graph_node
+    image: graphprotocol/graph-node
+    depends_on:
+      - ipfs
+      - postgres
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      postgres_host: postgres
+      postgres_user: postgres
+      postgres_pass: postgres
+      postgres_db: astar_graph_node
+      ipfs: ipfs:5001
+      ethereum: "mainnet:https://nodes.vefinetwork.org/astar"
+      GRAPH_LOG: info
+    networks:
+      - graph
+  polygon:
+    container_name: polygon_graph_node
+    image: graphprotocol/graph-node
+    depends_on:
+      - ipfs
+      - postgres
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      postgres_host: postgres
+      postgres_user: postgres
+      postgres_pass: postgres
+      postgres_db: polygon_graph_node
+      ipfs: ipfs:5001
+      ethereum: "mainnet:https://polygon-rpc.com"
+      GRAPH_LOG: info
+    networks:
+      - graph
+  gatechain:
+    container_name: gatechain_graph_node
+    image: graphprotocol/graph-node
+    depends_on:
+      - ipfs
+      - postgres
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      postgres_host: postgres
+      postgres_user: postgres
+      postgres_pass: postgres
+      postgres_db: gatechain_graph_node
+      ipfs: ipfs:5001
+      ethereum: "mainnet:https://evm.gatenode.cc"
+      GRAPH_LOG: info
+    networks:
+      - graph
+  wanchain:
+    container_name: wanchain_graph_node
+    image: graphprotocol/graph-node
+    depends_on:
+      - ipfs
+      - postgres
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      postgres_host: postgres
+      postgres_user: postgres
+      postgres_pass: postgres
+      postgres_db: wanchain_graph_node
+      ipfs: ipfs:5001
+      ethereum: "mainnet:https://gwan-ssl.wandevs.org:56891"
+      GRAPH_LOG: info
+    networks:
+      - graph
+  okc:
+    container_name: okc_graph_node
+    image: graphprotocol/graph-node
+    depends_on:
+      - ipfs
+      - postgres
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      postgres_host: postgres
+      postgres_user: postgres
+      postgres_pass: postgres
+      postgres_db: okc_graph_node
+      ipfs: ipfs:5001
+      ethereum: "mainnet:https://exchainrpc.okex.org"
+      GRAPH_LOG: info
+    networks:
+      - graph
+  telos:
+    container_name: telos_graph_node
+    image: graphprotocol/graph-node
+    depends_on:
+      - ipfs
+      - postgres
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      postgres_host: postgres
+      postgres_user: postgres
+      postgres_pass: postgres
+      postgres_db: telos_graph_node
+      ipfs: ipfs:5001
+      ethereum: "mainnet:https://mainnet.telos.net/evm"
+      GRAPH_LOG: info
+    networks:
+      - graph
+  smartchain:
+    container_name: smartchain_graph_node
+    image: graphprotocol/graph-node
+    depends_on:
+      - ipfs
+      - postgres
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      postgres_host: postgres
+      postgres_user: postgres
+      postgres_pass: postgres
+      postgres_db: smartchain_graph_node
+      ipfs: ipfs:5001
+      ethereum: "mainnet:https://bsc-dataseed2.defibit.io"
+      GRAPH_LOG: info
+    networks:
+      - graph
+  ethereum:
+    container_name: ethereum_graph_node
+    image: graphprotocol/graph-node
+    depends_on:
+      - ipfs
+      - postgres
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      postgres_host: postgres
+      postgres_user: postgres
+      postgres_pass: postgres
+      postgres_db: ethereum_graph_node
+      ipfs: ipfs:5001
+      ethereum: "mainnet:https://eth-mainnet.public.blastapi.io"
+      GRAPH_LOG: info
+    networks:
+      - graph
+  omax:
+    container_name: omax_graph_node
+    image: graphprotocol/graph-node
+    depends_on:
+      - ipfs
+      - postgres
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      postgres_host: postgres
+      postgres_user: postgres
+      postgres_pass: postgres
+      postgres_db: omax_graph_node
+      ipfs: ipfs:5001
+      ethereum: "mainnet:https://mainapi.omaxray.com"
+      GRAPH_LOG: info
+    networks:
+      - graph
+  proxy:
+    container_name: graph_nodes_proxy
+    networks:
+      - graph
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 65000:80
+    depends_on:
+      - bitgert
+      - ethereum
+      - smartchain
+      - omax
+      - telos
+      - okc
+      - wanchain
+      - gatechain
+      - polygon
+      - astar
+networks:
+  graph:
+    external: false
