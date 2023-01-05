@@ -38,7 +38,7 @@ services:
       postgres_pass: postgres
       postgres_db: bitgert_graph_node
       ipfs: ipfs:5001
-      ethereum: "mainnet:https://mainnet-rpc.brisescan.com"
+      ethereum: "mainnet:https://rpc.icecreamswap.com"
       GRAPH_LOG: info
     networks:
       - graph
