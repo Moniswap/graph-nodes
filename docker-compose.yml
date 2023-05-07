@@ -22,7 +22,7 @@ services:
       ]
     volumes:
       - ./pg-init-scripts:/docker-entrypoint-initdb.d
-      - pgdata:/var/lib/postgresql/data
+      - databasedata:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -233,7 +233,7 @@ networks:
   graph:
     external: false
 volumes:
-  pgdata:
+  databasedata:
     external: false
   ipfsdata:
     external: false
