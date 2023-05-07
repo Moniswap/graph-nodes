@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     networks:
       - graph
+    volumes:
+      - ipfsdata:/.ipfs
   postgres:
     container_name: db
     image: postgres
@@ -20,6 +22,7 @@ services:
       ]
     volumes:
       - ./pg-init-scripts:/docker-entrypoint-initdb.d
+      - dbdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -38,7 +41,7 @@ services:
       postgres_pass: postgres
       postgres_db: bitgert_graph_node
       ipfs: ipfs:5001
-      ethereum: "mainnet:https://nodes.vefinetwork.org/bitgert"
+      ethereum: "mainnet:https://nodes.vefinetwork.org/brise"
       GRAPH_LOG: info
     networks:
       - graph
@@ -56,7 +59,7 @@ services:
       postgres_pass: postgres
       postgres_db: astar_graph_node
       ipfs: ipfs:5001
-      ethereum: "mainnet:https://nodes.vefinetwork.org/astar"
+      ethereum: "mainnet:https://astar.public.blastapi.io"
       GRAPH_LOG: info
     networks:
       - graph
@@ -227,4 +230,9 @@ services:
       - astar
 networks:
   graph:
+    external: false
+volumes:
+  dbdata:
+    external: false
+  ipfsdata:
     external: false
