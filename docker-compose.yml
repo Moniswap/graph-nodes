@@ -43,6 +43,7 @@ services:
       ipfs: ipfs:5001
       ethereum: "mainnet:https://nodes.vefinetwork.org/brise"
       GRAPH_LOG: info
+      ETHEREUM_POLLING_INTERVAL: 10000
     networks:
       - graph
   astar:
