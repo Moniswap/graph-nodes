@@ -8,7 +8,7 @@ services:
     networks:
       - graph
     volumes:
-      - ipfsdata:/.ipfs
+      - ipfsdata:/home
   postgres:
     container_name: db
     image: postgres
