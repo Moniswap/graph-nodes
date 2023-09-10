@@ -60,7 +60,7 @@ services:
       postgres_pass: postgres
       postgres_db: base_mainnet_graph_db
       ipfs: ipfs:5001
-      ethereum: "mainnet:https://mainnet.base.org"
+      ethereum: "mainnet:https://base-mainnet.public.blastapi.io"
       GRAPH_LOG: info
       ETHEREUM_POLLING_INTERVAL: 1000
     networks:
