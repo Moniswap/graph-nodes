@@ -26,7 +26,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_MULTIPLE_DATABASES=base_graph_db,base_mainnet_graph_db
+      - POSTGRES_MULTIPLE_DATABASES=base_goerli_db,base_mainnet_db
   base-goerli:
     container_name: base_graph
     image: graphprotocol/graph-node
@@ -39,7 +39,7 @@ services:
       postgres_host: postgres
       postgres_user: postgres
       postgres_pass: postgres
-      postgres_db: base_graph_db
+      postgres_db: base_goerli_db
       ipfs: ipfs:5001
       ethereum: "goerli:https://goerli.base.org"
       GRAPH_LOG: info
@@ -58,7 +58,7 @@ services:
       postgres_host: postgres
       postgres_user: postgres
       postgres_pass: postgres
-      postgres_db: base_mainnet_graph_db
+      postgres_db: base_mainnet_db
       ipfs: ipfs:5001
       ethereum: "mainnet:https://base.publicnode.com"
       GRAPH_LOG: info
