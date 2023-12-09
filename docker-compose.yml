@@ -60,7 +60,7 @@ services:
       postgres_pass: postgres
       postgres_db: base_mainnet_db
       ipfs: ipfs:5001
-      ethereum: "mainnet:https://rpc.notadegen.com/base"
+      ethereum: "mainnet:https://mainnet.base.org"
       GRAPH_LOG: info
       ETHEREUM_POLLING_INTERVAL: 1000
     networks:
