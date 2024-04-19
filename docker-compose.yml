@@ -60,6 +60,7 @@ services:
       - 65000:80
     depends_on:
       - bsc-testnet
+      - ipfs
 networks:
   graph:
     external: false
