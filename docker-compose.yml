@@ -1,16 +1,16 @@
 version: "3.3"
 services:
   ipfs:
-    container_name: ipfs-service
-    build:
-      context: ./ipfs
-      dockerfile: Dockerfile
-    networks:
-      - graph
+    container_name: moniswap-ipfs-service
+    image: ipfs/kubo:latest
+    environment:
+      - IPFS_PROFILE=server
+      - IPFS_PATH=/ipfsdata
     volumes:
-      - ipfsdatarec:/home
+      - ./ipfs/config.sh:/container-init.d/config.sh
+      - ipfs--data:/ipfsdata
   postgres:
-    container_name: db
+    container_name: moniswap-graphs-db
     image: postgres
     networks:
       - graph
@@ -22,13 +22,13 @@ services:
       ]
     volumes:
       - ./pg-init-scripts:/docker-entrypoint-initdb.d
-      - postgresqldata:/var/lib/postgresql/data
+      - postgres--data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_MULTIPLE_DATABASES=base_goerli_db,base_mainnet_db
-  base-goerli:
-    container_name: base_graph
+      - POSTGRES_MULTIPLE_DATABASES=bsc_testnet_db,bera_mainnet_db
+  bsc-testnet:
+    container_name: bsc_testnet_graph
     image: graphprotocol/graph-node
     depends_on:
       - ipfs
@@ -39,28 +39,9 @@ services:
       postgres_host: postgres
       postgres_user: postgres
       postgres_pass: postgres
-      postgres_db: base_goerli_db
+      postgres_db: bsc_testnet_db
       ipfs: ipfs:5001
-      ethereum: "goerli:https://goerli.base.org"
-      GRAPH_LOG: info
-      ETHEREUM_POLLING_INTERVAL: 1000
-    networks:
-      - graph
-  base:
-    container_name: base_graph_mainnet
-    image: graphprotocol/graph-node
-    depends_on:
-      - ipfs
-      - postgres
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    environment:
-      postgres_host: postgres
-      postgres_user: postgres
-      postgres_pass: postgres
-      postgres_db: base_mainnet_db
-      ipfs: ipfs:5001
-      ethereum: "mainnet:https://base.llamarpc.com"
+      ethereum: "bscTestnet:https://rpc.ankr.com/bsc_testnet_chapel"
       GRAPH_LOG: info
       ETHEREUM_POLLING_INTERVAL: 1000
     networks:
@@ -76,13 +57,12 @@ services:
     ports:
       - 65000:80
     depends_on:
-      - base-goerli
-      - base
+      - bsc-testnet
 networks:
   graph:
     external: false
 volumes:
-  postgresqldata:
+  postgres--data:
     external: false
-  ipfsdatarec:
+  ipfs--data:
     external: false
