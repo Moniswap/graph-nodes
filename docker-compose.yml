@@ -9,6 +9,8 @@ services:
     volumes:
       - ./ipfs/config.sh:/container-init.d/config.sh
       - ipfs--data:/ipfsdata
+    networks:
+      - graph
   postgres:
     container_name: moniswap-graphs-db
     image: postgres
