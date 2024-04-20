@@ -43,7 +43,7 @@ services:
       postgres_pass: postgres
       postgres_db: bsc_testnet_db
       ipfs: ipfs:5001
-      ethereum: "bscTestnet:https://endpoints.omniatech.io/v1/bsc/testnet/public"
+      ethereum: "bscTestnet:https://bsc-testnet.blockpi.network/v1/rpc/public"
       GRAPH_LOG: info
       ETHEREUM_POLLING_INTERVAL: 1000
     networks:
