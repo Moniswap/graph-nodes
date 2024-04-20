@@ -43,7 +43,7 @@ services:
       postgres_pass: postgres
       postgres_db: bsc_testnet_db
       ipfs: ipfs:5001
-      ethereum: "bscTestnet:https://bsc-testnet-rpc.publicnode.com"
+      ethereum: "bscTestnet:https://api.zan.top/node/v1/bsc/testnet/public"
       GRAPH_LOG: info
       ETHEREUM_POLLING_INTERVAL: 1000
     networks:
