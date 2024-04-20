@@ -8,8 +8,8 @@ server {
     root /app/static;
   }
 
-  location /ipfs/ {
-    proxy_pass http://ipfs:5001/ipfs/;
+  location /ipfs-api/ {
+    proxy_pass http://ipfs:5001/;
   }
 
   location /bscTestnet/query/ {
