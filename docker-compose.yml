@@ -43,7 +43,7 @@ services:
       postgres_pass: postgres
       postgres_db: bsc_testnet_db
       ipfs: ipfs:5001
-      ethereum: "bscTestnet:https://bsc-testnet.public.blastapi.io"
+      ethereum: "bscTestnet:https://data-seed-prebsc-2-s2.bnbchain.org:8545"
       GRAPH_LOG: info
       ETHEREUM_POLLING_INTERVAL: 1000
     networks:
