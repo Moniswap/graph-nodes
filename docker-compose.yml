@@ -43,7 +43,7 @@ services:
       postgres_pass: postgres
       postgres_db: bsc_testnet_db
       ipfs: ipfs:5001
-      ethereum: "bscTestnet:https://public.stackup.sh/api/v1/node/bsc-testnet"
+      ethereum: "bscTestnet:https://api.stackup.sh/v1/node/aa8fe98b03035924c322708242168dc85c3c06dc64d29c52e29cec3fcc41939f"
       GRAPH_LOG: info
       ETHEREUM_POLLING_INTERVAL: 1000
     networks:
