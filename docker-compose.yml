@@ -45,7 +45,7 @@ services:
       ipfs: ipfs:5001
       ethereum: "bscTestnet:https://data-seed-prebsc-1-s1.binance.org:8545"
       GRAPH_LOG: info
-      ETHEREUM_POLLING_INTERVAL: 500
+      ETHEREUM_POLLING_INTERVAL: 5000
     networks:
       - graph
   proxy:
